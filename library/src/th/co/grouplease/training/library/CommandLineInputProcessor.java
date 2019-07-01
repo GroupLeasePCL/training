@@ -26,11 +26,42 @@ public class CommandLineInputProcessor {
     }
 
     private void processInput(final Scanner scanner){
-        System.out.println("Menu available: ...");
-        // TODO: implement input processor
+        System.out.println("Menu available:");
+        System.out.println("1: quit (quit)");
+        System.out.println("2: print books (printBooks)");
+        System.out.println("3: print users (printUsers)");
+
+        var userInput = scanner.nextLine().trim();
+
+        switch (userInput) {
+            case "quit":
+                quit();
+                break;
+            case "printBooks":
+                printBooks();
+                break;
+            case "printUsers":
+                printUsers();
+                break;
+            default:
+                System.out.println("Input to be handled: " + userInput);
+                break;
+        }
     }
 
-    private void stop(){
+    private void quit(){
         isRunning = false;
+    }
+
+    private void printBooks(){
+        for(var book : library.getBooks()){
+            System.out.println("Book id: " + book.getId() + " name: " + book.getName() + " registered date: " + book.getRegisteredDate());
+        }
+    }
+
+    private void printUsers(){
+        for(var user : library.getUsers()){
+            System.out.println("User id: " + user.getId() + " name: " + user.getName() + " registered date: " + user.getRegisteredDate());
+        }
     }
 }
