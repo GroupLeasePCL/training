@@ -34,6 +34,7 @@ public class CommandLineInputProcessor {
         System.out.println("2: print books (printBooks)");
         System.out.println("3: print users (printUsers)");
         System.out.println("4: search books (searchBooks)");
+        System.out.println("5: sort books (sortBooks)");
     }
 
     private void processInput(final Scanner scanner){
@@ -58,10 +59,17 @@ public class CommandLineInputProcessor {
                 var category = scanner.nextLine().trim();
                 searchBooks(id, name, category);
                 break;
+            case "sortBooks":
+                sortBooks();
+                break;
             default:
                 System.out.println("Input to be handled: " + userInput);
                 break;
         }
+    }
+
+    private void sortBooks(){
+        library.sortBooks();
     }
 
     private void searchBooks(String id, String name, String category) {
@@ -89,6 +97,6 @@ public class CommandLineInputProcessor {
     }
 
     private void printBook(final Book book){
-        System.out.println("Book id: " + book.getId() + " name: " + book.getName() + " category: " + book.getCategory() + " registered date: " + book.getRegisteredDate());
+        System.out.println("Book id: " + book.getId() + " category: " + book.getCategory() + " name: " + book.getName() + " registered date: " + book.getRegisteredDate());
     }
 }

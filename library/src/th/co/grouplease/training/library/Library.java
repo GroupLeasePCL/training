@@ -1,5 +1,6 @@
 package th.co.grouplease.training.library;
 
+import th.co.grouplease.training.library.comparator.BookComparator;
 import th.co.grouplease.training.library.domain.Book;
 import th.co.grouplease.training.library.domain.User;
 import th.co.grouplease.training.library.repository.BookRepository;
@@ -26,6 +27,10 @@ public class Library {
 
     public List<Book> getBooks() {
         return books;
+    }
+
+    public void sortBooks(){
+        books.sort(new BookComparator());
     }
 
     public List<Book> searchBooks(String id, String name, String category){
