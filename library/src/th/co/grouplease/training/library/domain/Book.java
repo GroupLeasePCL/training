@@ -8,12 +8,16 @@ public class Book {
     private String name;
     private String category;
     private LocalDate registeredDate;
+    private User borrower;
+    private LocalDate borrowedDate;
 
-    public Book(String id, String name, String category, LocalDate registeredDate) {
+    public Book(String id, String name, String category, LocalDate registeredDate, User borrower, LocalDate borrowedDate) {
         this.id = id;
         this.name = name;
         this.category = category;
         this.registeredDate = registeredDate;
+        this.borrower = borrower;
+        this.borrowedDate = borrowedDate;
     }
 
     public String getId() {
@@ -46,5 +50,21 @@ public class Book {
 
     public void setRegisteredDate(LocalDate registeredDate) {
         this.registeredDate = registeredDate;
+    }
+
+    public User getBorrower() {
+        return borrower;
+    }
+
+    public void setBorrower(User borrower) {
+        this.borrower = borrower;
+    }
+
+    public LocalDate getBorrowedDate() {
+        return borrowedDate;
+    }
+
+    public void setBorrowedDate(LocalDate borrowedDate) {
+        this.borrowedDate = borrowedDate;
     }
 }

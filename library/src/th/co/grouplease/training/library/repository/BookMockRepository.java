@@ -12,10 +12,10 @@ public class BookMockRepository implements BookRepository {
     private List<Book> books = new ArrayList<>();
 
     public BookMockRepository(){
-        books.add(new Book(UUID.randomUUID().toString(), "Book4", "Horror", LocalDate.now()));
-        books.add(new Book(UUID.randomUUID().toString(), "Book3", "Horror", LocalDate.now()));
-        books.add(new Book(UUID.randomUUID().toString(), "Book2", "Education", LocalDate.now()));
-        books.add(new Book(UUID.randomUUID().toString(), "Book1", "Education", LocalDate.now()));
+        books.add(new Book(UUID.randomUUID().toString(), "Book4", "Horror", LocalDate.now(), null, null));
+        books.add(new Book(UUID.randomUUID().toString(), "Book3", "Horror", LocalDate.now(), null, null));
+        books.add(new Book(UUID.randomUUID().toString(), "Book2", "Education", LocalDate.now(), null, null));
+        books.add(new Book(UUID.randomUUID().toString(), "Book1", "Education", LocalDate.now(), null, null));
     }
 
     @Override

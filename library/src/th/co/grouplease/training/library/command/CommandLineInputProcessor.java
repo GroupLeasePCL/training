@@ -35,6 +35,8 @@ public class CommandLineInputProcessor {
         System.out.println("3: print users (printUsers)");
         System.out.println("4: search books (searchBooks)");
         System.out.println("5: sort books (sortBooks)");
+        System.out.println("6: borrow a book (borrowBook)");
+        System.out.println("7: print borrowed books (printBorrowedBooks)");
     }
 
     private void processInput(final Scanner scanner){
@@ -62,10 +64,32 @@ public class CommandLineInputProcessor {
             case "sortBooks":
                 sortBooks();
                 break;
+            case "borrowBook":
+                System.out.println("Enter book id:");
+                var bookId = scanner.nextLine().trim();
+                System.out.println("Enter user id:");
+                var userId = scanner.nextLine().trim();
+                borrowBook(bookId, userId);
+                break;
+            case "printBorrowedBooks":
+                printBorrowedBooks();
+                break;
             default:
                 System.out.println("Input to be handled: " + userInput);
                 break;
         }
+    }
+
+    private void printBorrowedBooks() {
+        var borrowedBooks = library.getBorrowedBooks();
+        for(var book : borrowedBooks){
+            printBook(book);
+        }
+    }
+
+    private void borrowBook(String bookId, String userId) {
+        var result = library.borrowBook(bookId, userId);
+        System.out.println(result.isSucceeded() ? "Succeeded" : "Failed" + " borrowing book id: " + bookId + " because " + result.getError());
     }
 
     private void sortBooks(){
@@ -97,6 +121,7 @@ public class CommandLineInputProcessor {
     }
 
     private void printBook(final Book book){
-        System.out.println("Book id: " + book.getId() + " category: " + book.getCategory() + " name: " + book.getName() + " registered date: " + book.getRegisteredDate());
+        System.out.println("Book id: " + book.getId() + " category: " + book.getCategory() + " name: " + book.getName() +
+                " registered date: " + book.getRegisteredDate() + " borrowed by: " + book.getBorrower() + " borrowed date: " + book.getBorrowedDate());
     }
 }

@@ -7,9 +7,30 @@ import th.co.grouplease.training.library.repository.BookRepository;
 import th.co.grouplease.training.library.repository.UserRepository;
 
 import java.time.LocalDate;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
 
 public class Library {
+
+    public class BorrowingBookResult {
+        private boolean isSucceeded;
+        private String error;
+
+        BorrowingBookResult(boolean isSucceeded, String error) {
+            this.isSucceeded = isSucceeded;
+            this.error = error;
+        }
+
+        public boolean isSucceeded() {
+            return isSucceeded;
+        }
+
+        public String getError() {
+            return error;
+        }
+    }
+
     private final List<Book> books = new ArrayList<>();
     private final List<User> users = new ArrayList<>();
 
@@ -20,7 +41,7 @@ public class Library {
 
     // Book APIs
     public Book registerBook(String name, String category){
-        Book result = new Book(UUID.randomUUID().toString(), name, category, LocalDate.now());
+        Book result = new Book(UUID.randomUUID().toString(), name, category, LocalDate.now(), null, null);
         books.add(result);
         return result;
     }
@@ -76,6 +97,47 @@ public class Library {
         } else { //!isStringNullOrEmpty(category)
             return categoryResult;
         }
+    }
+
+    public BorrowingBookResult borrowBook(String bookId, String userId){
+        // find borrowing user by id
+        User borrowerUser = null;
+        for(var user : users){
+            if(user.getId().contains(userId)){
+                borrowerUser = user;
+            }
+        }
+
+        if(borrowerUser == null){
+            return new BorrowingBookResult(false, "Cannot find borrowing user by id: " + userId);
+        }
+
+        // find book by id
+        for(var book : books){
+            if(book.getId().contains(bookId)){
+                if(book.getBorrower() == null){
+                    book.setBorrower(borrowerUser);
+                    book.setBorrowedDate(LocalDate.now());
+                    return new BorrowingBookResult(true, null);
+                } else {
+                    return new BorrowingBookResult(false, "Book has been borrowed");
+                }
+            }
+        }
+
+        return new BorrowingBookResult(false, "Cannot find book by id: " + bookId);
+    }
+
+    public List<Book> getBorrowedBooks(){
+        var result = new ArrayList<Book>();
+
+        for(var book : books){
+            if(book.getBorrower() != null){
+                result.add(book);
+            }
+        }
+
+        return result;
     }
 
     // User APIs
