@@ -1,6 +1,5 @@
 package th.co.grouplease.training.library;
 
-import th.co.grouplease.training.library.command.CommandLineInputProcessor;
 import th.co.grouplease.training.library.repository.BookMockRepository;
 import th.co.grouplease.training.library.repository.UserMockRepository;
 

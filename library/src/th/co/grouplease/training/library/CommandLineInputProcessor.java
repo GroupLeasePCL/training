@@ -1,6 +1,5 @@
-package th.co.grouplease.training.library.command;
+package th.co.grouplease.training.library;
 
-import th.co.grouplease.training.library.Library;
 import th.co.grouplease.training.library.domain.Book;
 
 import java.util.Scanner;
