@@ -29,26 +29,24 @@ public class CommandLineInputProcessor {
 
     private void printMenus(){
         System.out.println("Menu available:");
-        System.out.println("1: quit (quit)");
-        System.out.println("2: print books (printBooks)");
-        System.out.println("3: print users (printUsers)");
-        System.out.println("4: search books (searchBooks)");
-        System.out.println("5: sort books (sortBooks)");
-        System.out.println("6: borrow a book (borrowBook)");
-        System.out.println("7: print borrowed books (printBorrowedBooks)");
+        System.out.println("1: display books (displayBooks)");
+        System.out.println("2: display users (displayUsers)");
+        System.out.println("3: search books (searchBooks)");
+        System.out.println("4: sort books (sortBooks)");
+        System.out.println("5: borrow a book (borrowBook)");
+        System.out.println("6: return a book (returnBook)");
+        System.out.println("7: display borrowed books (displayBorrowedBooks)");
+        System.out.println("8: quit (quit)");
     }
 
     private void processInput(final Scanner scanner){
         printMenus();
         var userInput = scanner.nextLine().trim();
         switch (userInput) {
-            case "quit":
-                quit();
-                break;
-            case "printBooks":
+            case "displayBooks":
                 printBooks();
                 break;
-            case "printUsers":
+            case "displayUsers":
                 printUsers();
                 break;
             case "searchBooks":
@@ -65,13 +63,21 @@ public class CommandLineInputProcessor {
                 break;
             case "borrowBook":
                 System.out.println("Enter book id:");
-                var bookId = scanner.nextLine().trim();
+                var borrowingBookId = scanner.nextLine().trim();
                 System.out.println("Enter user id:");
                 var userId = scanner.nextLine().trim();
-                borrowBook(bookId, userId);
+                borrowBook(borrowingBookId, userId);
                 break;
-            case "printBorrowedBooks":
+            case "returnBook":
+                System.out.println("Enter book id:");
+                var returningBookId = scanner.nextLine().trim();
+                returnBook(returningBookId);
+                break;
+            case "displayBorrowedBooks":
                 printBorrowedBooks();
+                break;
+            case "quit":
+                quit();
                 break;
             default:
                 System.out.println("Input to be handled: " + userInput);
@@ -84,6 +90,11 @@ public class CommandLineInputProcessor {
         for(var book : borrowedBooks){
             printBook(book);
         }
+    }
+
+    private void returnBook(String returningBookId) {
+        var result = library.returnBook(returningBookId);
+        System.out.println(result.isSucceeded() ? "Succeeded" : "Failed" + " returning book id: " + returningBookId + " because " + result.getError());
     }
 
     private void borrowBook(String bookId, String userId) {

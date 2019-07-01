@@ -13,11 +13,30 @@ import java.util.UUID;
 
 public class Library {
 
+    // Inner classes to report status of borrowing and returning
     public class BorrowingBookResult {
         private boolean isSucceeded;
         private String error;
 
         BorrowingBookResult(boolean isSucceeded, String error) {
+            this.isSucceeded = isSucceeded;
+            this.error = error;
+        }
+
+        public boolean isSucceeded() {
+            return isSucceeded;
+        }
+
+        public String getError() {
+            return error;
+        }
+    }
+
+    public class ReturningBookResult {
+        private boolean isSucceeded;
+        private String error;
+
+        public ReturningBookResult(boolean isSucceeded, String error) {
             this.isSucceeded = isSucceeded;
             this.error = error;
         }
@@ -124,8 +143,23 @@ public class Library {
                 }
             }
         }
-
         return new BorrowingBookResult(false, "Cannot find book by id: " + bookId);
+    }
+
+    public ReturningBookResult returnBook(String bookId){
+        // find book by id
+        for(var book : books){
+            if(book.getId().contains(bookId)){
+                if(book.getBorrower() == null){
+                    return new ReturningBookResult(false, "Cannot return book as it wasn't borrowed");
+                } else {
+                    book.setBorrowedDate(null);
+                    book.setBorrower(null);
+                    return new ReturningBookResult(true, null);
+                }
+            }
+        }
+        return new ReturningBookResult(false, "Cannot find book by id: " + bookId);
     }
 
     public List<Book> getBorrowedBooks(){
