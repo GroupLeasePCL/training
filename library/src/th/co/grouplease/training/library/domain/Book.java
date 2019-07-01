@@ -6,11 +6,13 @@ public class Book {
 
     private String id;
     private String name;
+    private String category;
     private LocalDate registeredDate;
 
-    public Book(String id, String name, LocalDate registeredDate) {
+    public Book(String id, String name, String category, LocalDate registeredDate) {
         this.id = id;
         this.name = name;
+        this.category = category;
         this.registeredDate = registeredDate;
     }
 
@@ -28,6 +30,14 @@ public class Book {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
     }
 
     public LocalDate getRegisteredDate() {
